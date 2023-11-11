@@ -10,6 +10,7 @@ const MenuItem = ({ item }) => {
                 <p>{recipe}</p>
             </div>
             <p>${price}</p>
+            
         </div>
     );
 };
