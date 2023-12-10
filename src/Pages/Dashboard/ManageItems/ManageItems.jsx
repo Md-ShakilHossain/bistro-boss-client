@@ -3,10 +3,11 @@ import SectionsTitle from "../../../Components/SectionsTitle/SectionsTitle";
 import useMenu from "../../../Hooks/useMenu";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 
 const ManageItems = () => {
-    const [menu, ,refetch] = useMenu();
+    const [menu, , refetch] = useMenu();
     const axiosSecure = useAxiosSecure();
 
     const handleDeleteItem = (item) => {
@@ -22,7 +23,7 @@ const ManageItems = () => {
             if (result.isConfirmed) {
                 const res = await axiosSecure.delete(`/menu/${item._id}`)
                 console.log(res.data);
-                if(res.data.deletedCount > 0){
+                if (res.data.deletedCount > 0) {
                     refetch();
                     Swal.fire({
                         position: "top-end",
@@ -30,9 +31,9 @@ const ManageItems = () => {
                         title: `${item.name} has been deleted`,
                         showConfirmButton: false,
                         timer: 1500
-                      });
+                    });
                 }
-                
+
             }
         });
     };
@@ -79,11 +80,13 @@ const ManageItems = () => {
                                     </td>
                                     <td className="text-right">${item.price}</td>
                                     <td>
-                                        <button
-                                            onClick={() => handleUpdateItem(item)}
-                                            className="btn btn-md bg-orange-500">
-                                            <FaEdit className="text-white" ></FaEdit>
-                                        </button>
+                                        <Link to={`/dashboard/updateItem/${item._id}`}>
+                                            <button
+                                                onClick={() => handleUpdateItem(item)}
+                                                className="btn btn-md bg-orange-500">
+                                                <FaEdit className="text-white" ></FaEdit>
+                                            </button>
+                                        </Link>
 
                                     </td>
                                     <td>

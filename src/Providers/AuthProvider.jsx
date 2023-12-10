@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { app } from "../Firebase/firebase.config";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
-import { setItem } from "localforage";
+
 
 export const AuthContext = createContext(null);
 
@@ -53,14 +53,16 @@ const AuthProvider = ({ children }) => {
                 .then(res => {
                     if(res.data.token){
                         localStorage.setItem('access-token', res.data.token);
+                        setLoading(false);
                     }
                 })
             }
             else {
-                // TODO: Remove token
+                // Remove token
                 localStorage.removeItem('access-token');
+                setLoading(false);
             }
-            setLoading(false);
+            
         })
         return () => {
             return unsubscribe;
